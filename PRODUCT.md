@@ -1,46 +1,47 @@
-# bookchaowalit-mcpdocs-frontend — Product brief
+# MCP Docs — Product truth
 
-**Slug:** `bookchaowalit-website/bookchaowalit-mcpdocs-frontend`  
-**Generated:** 2026-08-11 (bulk Book Dev closeout)  
-**Status:** starter / portfolio boundary
+> Inferred from the code and copy (no user interview). Checked against the portfolio card claims review
+> (`portfolio-site-web/docs/audits/CARD-CLAIMS-REVIEW-2026-10.md`, row `mcpdocs`, evidence Prototype) on 2026-10-23.
 
-## Purpose
+## What it is
 
-Portfolio repository under Book Dev. This brief records ownership and the
-current honest status so the nested tree is not an empty shell in the task
-system.
+A client-side register for writing down MCP tools and schemas, kept in the visitor's browser, plus a stateless
+JSON-RPC route with a few authored MCP reference notes.
 
-## Runnable path
+## Who it is for
 
-See `README.md` for install and run instructions when present.
+A portfolio visitor (or the owner) who wants a quick scratch register for tool names, what they accept and return,
+and where each one is in its lifecycle.
 
-## Limits
+## What works today
 
-- Not claimed as production-ready unless README and tests prove it.
-- Mobile smoke / emulator acceptance is separate and toolchain-dependent.
+1. Add a record with a name, details and lifecycle (Draft, Active or Done); a blank name is refused.
+2. Search name, details and lifecycle (case-insensitive), filter by lifecycle, delete a record.
+3. Records persist in localStorage (`mcpdocs-v2`) in this browser only. One seed record (`search_docs`, Active).
+4. `/api/mcp` answers JSON-RPC `initialize`, `tools/list` and `tools/call` with `get_protocol_docs`,
+   `get_integration_guide` and `search_docs` over the notes in `lib/reference.ts`. It echoes the request id and returns
+   JSON-RPC errors for unknown methods, tools, sections or platforms.
+5. Front-end and server errors go to Sentry (errors only, personal data stripped) when `NEXT_PUBLIC_SENTRY_DSN` is set.
 
-## Source README excerpt
+## What does not work (and must not be claimed)
 
-```
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+- No 100+ tool MCP server, no docs auto-generated from MCP schemas, no MDX, no onboarding-time outcome (claims removed
+  from the portfolio card in the 2026-10 review).
+- No hosted registry, account, sync, export or sharing; clearing site data loses the records.
+- The MCP route cannot read the browser register. Its notes are short summaries, not the specification.
+  The old `get_examples` (placeholder one-liners) and `get_servers` (stale `*.vercel.app` links with made-up endpoint
+  counts) tools were removed on 2026-10-23.
 
-## Getting Started
+## Live URL and deploy state
 
-First, run the development server:
+- Live: https://mcpdocs.bookchaowalit.com (HTTP 200 on 2026-10-23).
+- The Vercel project `bookchaowalit-mcpdocs-frontend` is deployed only by CLI. Last production deploy:
+  2026-10-23 12:10, CLI, commit db240d8 (the CVE patch). Its Git link names the old repository
+  `bookchaowalit/bookchaowalit-mcpdocs-frontend`, so a push to `main` does not deploy: the L2 commits (tests, truthful
+  MCP route, Sentry, lint fixes) stay undeployed until the owner reconnects Vercel Git to
+  `bookchaowalit-website/devtools-mcpdocs-web` (owner action D9).
+- `NEXT_PUBLIC_SENTRY_DSN` is set on the Vercel project (Sentry project `devtools-mcpdocs-web`, org `personal-yu0`).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Boundaries
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize an
-```
+- Browser-only apart from the stateless `/api/mcp` route. No personal data is collected.
