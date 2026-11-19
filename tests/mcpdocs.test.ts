@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { FILTERS, SEED, addRecord, filterRecords, parseRecords, removeRecord, serializeRecords, type RecordItem } from "@/lib/mcpdocs";
+import { FILTERS, SEED, addRecord, filterRecords, parseRecords, removeRecord, restoreRecord, serializeRecords, type RecordItem } from "@/lib/mcpdocs";
 
 const rows: RecordItem[] = [
   { id: "a", title: "search_docs", body: "Full-text search", status: "Active" },
@@ -43,5 +43,14 @@ describe("register logic", () => {
     expect(parseRecords('[null, {"id":1}, {"id":"x","title":"t","status":"Stable"}]')).toEqual([
       { id: "x", title: "t", body: "", status: "Draft" },
     ]);
+  });
+
+  it("restores a removed record before its old neighbour, or at the end, never twice", () => {
+    const b = rows[1];
+    const without = rows.filter((r) => r.id !== "b");
+    expect(restoreRecord(without, b, "c").map((r) => r.id)).toEqual(["a", "b", "c"]);
+    expect(restoreRecord(without, b, "gone").map((r) => r.id)).toEqual(["a", "c", "b"]);
+    expect(restoreRecord(without, b, null).map((r) => r.id)).toEqual(["a", "c", "b"]);
+    expect(restoreRecord(rows, b, "c")).toBe(rows);
   });
 });

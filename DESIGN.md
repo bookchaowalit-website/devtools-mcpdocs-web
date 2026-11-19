@@ -3,6 +3,11 @@ name: Schema / Log
 description: A dark protocol field log for drafting, searching, and retiring local MCP tool records.
 ---
 
+> **Current look (2026-11-19):** the register uses the shared **App shell** (`APP-SHELL.md`): Geist and Geist Mono,
+> light and dark, lifecycle lists in the sidebar, a composer that opens in place, rows with a lifecycle pill and an
+> undoable Remove. The "Schema / Log" notes below are the earlier look, kept for history; its palette is no longer shipped.
+
+
 # Design System: Schema / Log
 
 ## Overview

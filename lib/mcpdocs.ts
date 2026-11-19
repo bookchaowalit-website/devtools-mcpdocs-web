@@ -62,3 +62,14 @@ export function addRecord(
 export function removeRecord(items: RecordItem[], id: string): RecordItem[] {
   return items.filter((item) => item.id !== id);
 }
+
+/**
+ * Put a removed record back before the record that followed it when it was removed (`beforeId`), or at the end
+ * when that record is gone too. A record that is already present is not added twice.
+ */
+export function restoreRecord(items: RecordItem[], item: RecordItem, beforeId: string | null): RecordItem[] {
+  if (items.some((entry) => entry.id === item.id)) return items;
+  const index = beforeId === null ? -1 : items.findIndex((entry) => entry.id === beforeId);
+  if (index < 0) return [...items, item];
+  return [...items.slice(0, index), item, ...items.slice(index)];
+}

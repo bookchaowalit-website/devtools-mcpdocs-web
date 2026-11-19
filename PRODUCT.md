@@ -16,7 +16,8 @@ and where each one is in its lifecycle.
 ## What works today
 
 1. Add a record with a name, details and lifecycle (Draft, Active or Done); a blank name is refused.
-2. Search name, details and lifecycle (case-insensitive), filter by lifecycle, delete a record.
+2. Search name, details and lifecycle (case-insensitive), filter by lifecycle (sidebar lists with counts), remove a record
+   (Undo for 6 s, one Undo restores every removal in that window).
 3. Records persist in localStorage (`mcpdocs-v2`) in this browser only. One seed record (`search_docs`, Active).
 4. `/api/mcp` answers JSON-RPC `initialize`, `tools/list` and `tools/call` with `get_protocol_docs`,
    `get_integration_guide` and `search_docs` over the notes in `lib/reference.ts`. It echoes the request id and returns
