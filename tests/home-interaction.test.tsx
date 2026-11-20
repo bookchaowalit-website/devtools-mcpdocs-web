@@ -94,6 +94,9 @@ describe("lists and search", () => {
     expect(host.textContent).toContain("Nothing matches");
     press(button("Show all records"));
     expect($("h1")!.textContent).toBe("All records");
+    // The pressed button is gone; focus goes back to the search field with the query kept.
+    expect(document.activeElement).toBe($(".as-search input"));
+    expect($<HTMLInputElement>(".as-search input")!.value).toBe("zzz");
     press(button("Clear search"));
     expect(document.activeElement).toBe($(".as-search input"));
     expect(rows()).toHaveLength(3);

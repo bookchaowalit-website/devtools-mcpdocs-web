@@ -129,6 +129,11 @@ export default function Home() {
     setDraft(EMPTY);
     setComposing(false);
   }
+  // The button leaves the page with the empty state, so focus goes back to the search field (query kept).
+  function showAllRecords() {
+    setFilter("All");
+    searchRef.current?.focus();
+  }
   function clearSearch() {
     setQuery("");
     searchRef.current?.focus();
@@ -243,7 +248,7 @@ export default function Home() {
                   No record in {filter === "All" ? "the register" : title} mentions “{trimmed}”.
                   <div className="md-empty-actions">
                     <button type="button" className="as-plain" onClick={clearSearch}>Clear search</button>
-                    {filter !== "All" ? <button type="button" className="as-plain" onClick={() => setFilter("All")}>Show all records</button> : null}
+                    {filter !== "All" ? <button type="button" className="as-plain" onClick={showAllRecords}>Show all records</button> : null}
                   </div>
                 </>
               ) : records.length === 0 ? (
